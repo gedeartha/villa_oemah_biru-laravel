@@ -50,21 +50,31 @@
                                     {{ $date }}
                                 </td>
                                 <td class="px-6 py-4 border-r">
-                                    {{ $reservation->room }}
+                                    @php
+                                        $room = DB::Table('rooms')
+                                            ->where('id', $reservation->room_id)
+                                            ->first();
+                                    @endphp
+                                    {{ $room->name }}
                                 </td>
                                 <td class="px-6 py-4 border-r">
                                     @php
-                                        $dateStartGet = $reservation->reservation_date_start;
+                                        $dateStartGet = $reservation->check_in;
                                         $dateStart = date('d M Y', strtotime($dateStartGet));
                                         
-                                        $dateEndGet = $reservation->reservation_date_end;
+                                        $dateEndGet = $reservation->check_out;
                                         $dateEnd = date('d M Y', strtotime($dateEndGet));
                                     @endphp
                                     {{ $dateStart }} - {{ $dateEnd }}
                                 </td>
                                 <th scope="row"
                                     class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap border-r">
-                                    {{ $reservation->name }}
+                                    @php
+                                        $user = DB::Table('users')
+                                            ->where('id', $reservation->user_id)
+                                            ->first();
+                                    @endphp
+                                    {{ $user->name }}
                                 </th>
                                 <td class="px-6 py-4 border-r text-right">
                                     Rp {{ number_format($reservation->total, 0, ',', '.') }}

@@ -9,8 +9,8 @@ class AdminReservationController extends Controller
 {
     public function index()
     {
+
         $reservations = DB::Table('reservations')
-            ->join('users', 'reservations.user_id', '=', 'users.id')
             ->where('reservations.status', '!=', 'Pending')
             ->get();
 

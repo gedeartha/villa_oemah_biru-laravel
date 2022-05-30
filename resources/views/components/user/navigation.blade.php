@@ -2,7 +2,7 @@
     <div class="max-w-7xl mx-auto">
         <nav class="px-2 border-gray-200 sha">
             <div class="container flex flex-wrap items-center justify-between mx-auto">
-                <a href="#" class="flex items-center">
+                <a href="{{ route('home') }}" class="flex items-center">
                     <img src="/image/logo.svg" class="mr-3 h-20" alt="Logo">
                     <span class="self-center text-xl font-bold text-primary whitespace-nowrap">Villa Oemah Biru
                         Bali</span>

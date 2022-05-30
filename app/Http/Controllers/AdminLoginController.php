@@ -13,7 +13,7 @@ class AdminLoginController extends Controller
             return view('admin.login.index');
         } else {
             return redirect()
-            ->route('dashboard');
+            ->route('admin.profile.index');
         }
     }
     
@@ -51,7 +51,7 @@ class AdminLoginController extends Controller
             ]);
             
             return redirect()
-            ->route('dashboard');
+            ->route('admin.profile.index');
 
         } else {
             return back()

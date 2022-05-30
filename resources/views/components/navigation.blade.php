@@ -1,11 +1,11 @@
 <div class="fixed w-64 h-screen bg-white shadow-md">
     <div class="overflow-y-auto py-4 px-3 rounded">
-        <a href="#" class="flex items-center pl-2.5 mb-6">
+        <a href="{{ route('admin.profile.index') }}" class="flex items-center pl-2.5 mb-6">
             <img src="/image/logo.svg" class="h-6 mr-3 sm:h-7" alt="Logo">
             <span class="self-center text-xl font-semibold whitespace-nowrap text-primary">Villa Oemah Biru</span>
         </a>
         <ul class="space-y-2">
-            <li>
+            {{-- <li>
                 <x-nav-link :href="route('dashboard')" :active="request()->getRequestUri() == '/admin'">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
@@ -15,7 +15,7 @@
                     </svg>
                     <span class="ml-4">Dashboard</span>
                 </x-nav-link>
-            </li>
+            </li> --}}
 
             <li>
                 <x-nav-link :href="route('admin.profile.index')" :active="request()->getRequestUri() == '/admin/profile'">
@@ -77,41 +77,43 @@
             </x-ul-link>
             </li>
 
-            <li>
-                <button type="button"
-                    class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-tertiary hover:font-semibold hover:text-gray-900"
-                    aria-controls="dropdown-admin" data-collapse-toggle="dropdown-admin">
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                        class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
-                    </svg>
-                    <span class="flex-1 ml-4 text-left whitespace-nowrap" sidebar-toggle-item>Admin</span>
+            @if (session()->get('role') == 'owner')
+                <li>
+                    <button type="button"
+                        class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-tertiary hover:font-semibold hover:text-gray-900"
+                        aria-controls="dropdown-admin" data-collapse-toggle="dropdown-admin">
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                            class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
+                        </svg>
+                        <span class="flex-1 ml-4 text-left whitespace-nowrap" sidebar-toggle-item>Admin</span>
 
-                    <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <x-ul-link id="dropdown-admin" :active="request()->getRequestUri() == '/admin/admins' or
-                    request()->getRequestUri() == '/admin/admins/add'">
-            <li>
-                <x-nav-link :href="route('admin.admins.index')" :active="request()->getRequestUri() == '/admin/admins'">
-                    <div class="pl-11 ">
-                        List Admin</div>
-                </x-nav-link>
-            </li>
-            <li>
-                <x-nav-link :href="route('admin.admins.add')" :active="request()->getRequestUri() == '/admin/admins/add'">
-                    <div class="pl-11 ">
-                        Tambah Admin</div>
-                </x-nav-link>
-            </li>
-            </x-ul-link>
-            </li>
+                        <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                    </button>
+                    <x-ul-link id="dropdown-admin" :active="request()->getRequestUri() == '/admin/admins' or
+                        request()->getRequestUri() == '/admin/admins/add'">
+                <li>
+                    <x-nav-link :href="route('admin.admins.index')" :active="request()->getRequestUri() == '/admin/admins'">
+                        <div class="pl-11 ">
+                            List Admin</div>
+                    </x-nav-link>
+                </li>
+                <li>
+                    <x-nav-link :href="route('admin.admins.add')" :active="request()->getRequestUri() == '/admin/admins/add'">
+                        <div class="pl-11 ">
+                            Tambah Admin</div>
+                    </x-nav-link>
+                </li>
+                </x-ul-link>
+                </li>
+            @endif
 
             <li>
                 <button type="button"
