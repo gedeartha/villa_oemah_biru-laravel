@@ -1,0 +1,126 @@
+<x-layouts.base>
+    <div>
+        <div>
+            <div class="font-bold text-xl text-primary tracking-wider mb-6">Tambah Admin</div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-x-4">
+            <div class="col-span-7">
+                <x-card>
+                    <form action="{{ route('admin.admins.store') }}" method="POST">
+                        @csrf
+                        <div class="grid grid-cols-12 gap-y-4 p-6">
+
+                            <div class="col-span-4 my-auto">
+                                <div class="font-semibold text-sm text-primary">Nama Lengkap</div>
+                            </div>
+                            <div class="col-span-8">
+                                <input type="text" id="fullname" name="fullname"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                    placeholder="Bagus Setiawan" required>
+                            </div>
+
+                            <div class="col-span-4 my-auto">
+                                <div class="font-semibold text-sm text-primary">Email</div>
+                            </div>
+                            <div class="col-span-8">
+                                <div class="flex">
+                                    <input type="text" id="email" name="email"
+                                        class="rounded-none rounded-l-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5"
+                                        placeholder="bagus" required>
+                                    <span
+                                        class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-l-0 border-gray-300 rounded-r-md">
+                                        @villa-oemah-biru.com
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-span-4 my-auto">
+                                <div class="font-semibold text-sm text-primary">Status</div>
+                            </div>
+                            <div class="col-span-8 flex space-x-3 items-center">
+                                <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Tidak
+                                    Aktif</span>
+                                <label for="name" class="inline-flex relative items-center mr-5 cursor-pointer">
+                                    <input type="checkbox" id="name" name="status" class="sr-only peer">
+                                    <div
+                                        class="w-11 h-6 bg-gray-200 rounded-full peer dark:bg-gray-700 peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600">
+                                    </div>
+                                    <span class="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Aktif</span>
+                                </label>
+                            </div>
+
+                            <div class="col-span-12">
+                                <div class="float-right">
+                                    <button type="submit"
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </x-card>
+            </div>
+
+            <div class="col-span-5">
+                <x-card>
+                    <div class="p-5">
+                        <div class="font-semibold text-sm text-primary">Informasi</div>
+                        <hr class="mt-2 mb-4" />
+
+                        @if (session('warning'))
+                            {{-- Warning Alert --}}
+                            <div class="flex p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg" role="alert">
+                                <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Warning!</span> {{ session('warning') }}
+                                </div>
+                            </div>
+                            {{-- Warning Alert --}}
+                        @endif
+
+                        @if (session('success'))
+                            {{-- Success Alert --}}
+                            <div class="flex p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+                                <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <div>
+                                    <span class="font-medium">Success!</span> {{ session('success') }}
+                                </div>
+                            </div>
+                            {{-- Success Alert --}}
+
+                            <div class="grid grid-cols-12">
+                                <div class="col-span-3 space-y-2">
+                                    <div class="text-sm text-primary">Nama</div>
+                                    <div class="text-sm text-primary">Email</div>
+                                    <div class="text-sm text-primary">Status</div>
+                                </div>
+                                <div class="col-span-8 space-y-2">
+                                    <div class="text-sm text-primary font-bold">: {{ session('account_name') }}</div>
+                                    <div class="text-sm text-primary font-bold">: {{ session('account_email') }}</div>
+                                    <div class="text-sm text-primary font-bold">: {{ session('account_status') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-4 mb-4 mt-4 text-sm text-blue-700 bg-blue-100 rounded-lg" role="alert">
+                                <p>Password default adalah <b>villaoemahbiru</b></p>
+                                <p>Mohon segera mengganti password setelah Admin login.</p>
+                            </div>
+                        @endif
+                    </div>
+                </x-card>
+            </div>
+        </div>
+    </div>
+</x-layouts.base>

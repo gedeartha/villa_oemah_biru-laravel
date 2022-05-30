@@ -1,0 +1,95 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Facilities;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class AdminFacilitiesController extends Controller
+{
+    public function index()
+    {
+        $facilities = DB::Table('facilities')
+            ->get();
+
+        return view('admin.facilities.index', ['facilities' => $facilities]);
+    }
+    
+    public function add()
+    {        
+        return view('admin.facilities.add');
+    }
+    
+    public function store(Request $request)
+    {  
+        if ($request->status != null) {
+            $status = 'Aktif';
+        } else {
+            $status = 'Tidak Aktif';
+        }
+        
+        $image = $request->file('image');
+        $image->storeAs('public/facilities/', $image->hashName());
+
+        $post = Facilities::create([
+            'name' => $request->name,
+            'icon' => $request->image->hashName(),
+            'status' => $status,
+        ]);
+            
+        return back()
+        ->withInput()
+        ->with([
+                'success' => 'Fasilitas berhasil ditambahkan.'
+        ]);
+    }
+    
+    public function edit($id)
+    {
+        $facility = DB::table('facilities')
+                ->where('id', $id)
+                ->first();
+        
+        return view('admin.facilities.edit', ['facility' => $facility]);
+    }
+    
+    public function update(Request $request, $id)
+    {
+        if ($request->status != null) {
+            $status = 'Aktif';
+        } else {
+            $status = 'Tidak Aktif';
+        }
+
+        if ($status == 'Tidak Aktif') {
+            $deleteRoomFacilities = DB::table('room_facilities')
+                ->where('facilities_id', $id)
+                ->delete();
+        }
+
+        $facility = DB::table('facilities')
+            ->where('id', $id)
+            ->first();
+        
+            if ($request->image != null) {
+                $image = $request->file('image');
+                $image->storeAs('public/facilities/', $image->hashName());
+                $image = $request->image->hashName();
+            } else {
+                $image = $facility->icon;
+            }
+
+        $update = DB::table('facilities')->where('id', $id)->update([
+            'name' => $request->name,
+            'icon' => $image,
+            'status' => $status,
+            'updated_at' =>now()]);
+
+        return back()
+        ->withInput()
+        ->with([
+                'success' => 'Fasilitas berhasil diperbarui.'
+        ]);
+    }
+}
