@@ -49,9 +49,28 @@ class UserRoomController extends Controller
 
         $getCheckIn = $request->check_in;
         $getCheckOut = $request->check_out;
+
+        $dateNow = date('Y-m-d');
         
         $checkIn = date_create($getCheckIn);
+        $dateCheckIn = date_format($checkIn, 'Y-m-d');
+        
+        if ($dateCheckIn <= $dateNow) {
+            return back()
+                 ->with([
+                    'warning' => 'Tanggal tidak tersedia'
+                ]);
+        }
+        
         $checkOut = date_create($getCheckOut);
+        
+        if ($checkIn == $checkOut) {
+            return back()
+                 ->with([
+                    'warning' => 'Tanggal tidak tersedia'
+                ]);
+        }
+
         $diff = date_diff($checkIn, $checkOut);
 
         $days = $diff->format('%a');
