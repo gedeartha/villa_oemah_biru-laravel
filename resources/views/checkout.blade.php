@@ -71,9 +71,9 @@
                                             <label for="adult"
                                                 class="block mb-2 text-sm font-semibold text-gray-500">Jumlah Orang
                                                 Dewasa</label>
-                                            <select id="adult" name="adult" required
+                                            <select required id="adult" name="adult"
                                                 class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                                <option selected="">Pilih Jumlah Orang Dewasa</option>
+                                                <option value="">Pilih Jumlah Orang Dewasa</option>
                                                 <option value="1">1 Orang Dewasa</option>
                                                 <option value="2">2 Orang Dewasa</option>
                                                 <option value="3">3 Orang Dewasa</option>
@@ -87,9 +87,9 @@
                                             <label for="child"
                                                 class="block mb-2 text-sm font-semibold text-gray-500">Jumlah
                                                 Anak-anak</label>
-                                            <select id="child" name="child" required
+                                            <select required id="child" name="child"
                                                 class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                                <option selected="">Pilih Jumlah Anak-anak</option>
+                                                <option value="">Pilih Jumlah Anak-anak</option>
                                                 <option value="0">0 Anak</option>
                                                 <option value="1">1 Anak</option>
                                                 <option value="2">2 Anak</option>

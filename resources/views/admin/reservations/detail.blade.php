@@ -29,14 +29,28 @@
                             <div class="font-semibold text-sm text-primary">Nama</div>
                         </div>
                         <div class="col-span-8 text-right">
-                            <div class="font-semibold text-sm text-primary">{{ $reservation->name }}</div>
+                            <div class="font-semibold text-sm text-primary">
+                                @php
+                                    $user = DB::Table('users')
+                                        ->where('id', $reservation->user_id)
+                                        ->first();
+                                @endphp
+                                {{ $user->name }}
+                            </div>
                         </div>
 
                         <div class="col-span-4 my-auto">
                             <div class="font-semibold text-sm text-primary">Tipe Kamar</div>
                         </div>
                         <div class="col-span-8 text-right">
-                            <div class="font-semibold text-sm text-primary">{{ $reservation->room }}</div>
+                            <div class="font-semibold text-sm text-primary">
+                                @php
+                                    $room = DB::Table('rooms')
+                                        ->where('id', $reservation->room_id)
+                                        ->first();
+                                @endphp
+                                {{ $room->name }}
+                            </div>
                         </div>
 
                         <div class="col-span-4 my-auto">

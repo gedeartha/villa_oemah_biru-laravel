@@ -22,7 +22,7 @@ class AdminSeeder extends Seeder
                 'name' => 'Owner',
                 'email' => 'owner@villa-oemah-biru.com',
                 'password' => 'asd',
-                'status' => 'aktif',
+                'status' => 'Aktif',
                 'role' => 'owner',
                 'avatar' => 'owner.jpg',
                 'created_at' => now(),

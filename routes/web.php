@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminAdminsController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminFacilitiesController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminProfileController;
@@ -54,9 +55,7 @@ Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.
 Route::post('/admin/login/auth', [AdminLoginController::class, 'auth'])->name('admin.login.auth');
 Route::get('/admin/login/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
 
-Route::get('/admin', function () {
-    return view('admin.index');
-})->name('dashboard');
+Route::get('/admin', [AdminDashboardController::class, 'index'])->name('dashboard');
 
 Route::get('/admin/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
 Route::put('/admin/profile/update', [AdminProfileController::class, 'update'])->name('admin.profile.update');

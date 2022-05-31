@@ -21,7 +21,7 @@ class AdminReservationController extends Controller
     {
         
         $reservation = DB::Table('reservations')
-            ->join('users', 'reservations.user_id', '=', 'users.id')
+            ->where('reservations.status', '!=', 'Pending')
             ->where('reservations.id', $id)
             ->first();
 
