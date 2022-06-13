@@ -9,6 +9,10 @@ class AdminVillaController extends Controller
 {
     public function index()
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $villa = DB::Table('villas')
             ->where('id', 1)
             ->first();

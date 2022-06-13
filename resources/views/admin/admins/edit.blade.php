@@ -47,15 +47,27 @@
                                 </label>
                             </div>
 
+
                             <div class="col-span-12">
                                 <div class="float-right">
                                     <button type="submit"
-                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Submit</button>
+                                        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Update</button>
 
                                 </div>
                             </div>
+
                         </div>
                     </form>
+
+                    <div class="p-6 -mt-20">
+                        <form action="{{ $admin->id }}/delete" method="POST" enctype="multipart/form-data">
+                            @method('DELETE')
+                            @csrf
+
+                            <button
+                                class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Hapus</button>
+                        </form>
+                    </div>
                 </x-card>
             </div>
 

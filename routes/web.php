@@ -77,12 +77,14 @@ Route::get('/admin/facilities/add', [AdminFacilitiesController::class, 'add'])->
 Route::post('/admin/facilities/store', [AdminFacilitiesController::class, 'store'])->name('admin.facilities.store');
 Route::get('/admin/facilities/edit/{id}', [AdminFacilitiesController::class, 'edit'])->name('admin.facilities.edit');
 Route::put('/admin/facilities/edit/{id}/update', [AdminFacilitiesController::class, 'update'])->name('admin.facilities.update');
+Route::delete('/admin/facilities/edit/{id}/delete', [AdminFacilitiesController::class, 'delete'])->name('admin.facilities.delete');
 
 Route::get('/admin/admins', [AdminAdminsController::class, 'index'])->name('admin.admins.index');
 Route::get('/admin/admins/add', [AdminAdminsController::class, 'add'])->name('admin.admins.add');
 Route::post('/admin/admins/store', [AdminAdminsController::class, 'store'])->name('admin.admins.store');
 Route::get('/admin/admins/edit/{id}', [AdminAdminsController::class, 'edit'])->name('admin.admins.edit');
 Route::put('/admin/admins/edit/{id}/update', [AdminAdminsController::class, 'update'])->name('admin.admins.update');
+Route::delete('/admin/admins/edit/{id}/delete', [AdminAdminsController::class, 'delete'])->name('admin.admins.delete');
 
 Route::get('/admin/villa', [AdminVillaController::class, 'index'])->name('admin.villa.index');
 Route::put('/admin/villa', [AdminVillaController::class, 'update'])->name('admin.villa.update');

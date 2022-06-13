@@ -10,6 +10,10 @@ class AdminFacilitiesController extends Controller
 {
     public function index()
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+
         $facilities = DB::Table('facilities')
             ->get();
 
@@ -17,7 +21,11 @@ class AdminFacilitiesController extends Controller
     }
     
     public function add()
-    {        
+    {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+
         return view('admin.facilities.add');
     }
     
@@ -47,6 +55,10 @@ class AdminFacilitiesController extends Controller
     
     public function edit($id)
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $facility = DB::table('facilities')
                 ->where('id', $id)
                 ->first();
@@ -90,6 +102,19 @@ class AdminFacilitiesController extends Controller
         ->withInput()
         ->with([
                 'success' => 'Fasilitas berhasil diperbarui.'
+        ]);
+    }
+
+    public function delete($id)
+    {       
+        $delete = DB::table('facilities')
+            ->where('id', $id)
+            ->delete();
+        
+        return redirect()
+            ->route('admin.facilities.index')
+            ->with([
+                'success' => 'Fasilitas berhasil dihapus.'
         ]);
     }
 }

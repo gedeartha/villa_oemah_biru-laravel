@@ -10,6 +10,10 @@ class AdminAdminsController extends Controller
 {
     public function index()
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+
         $admins = DB::Table('admins')
             ->where('role', '!=', 'owner')
             ->get();
@@ -18,12 +22,20 @@ class AdminAdminsController extends Controller
     }
 
     public function add()
-    {        
+    {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         return view('admin.admins.add');
     }
 
     public function edit($id)
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $admin = DB::table('admins')
             ->where('id', $id)
             ->first();
@@ -90,6 +102,19 @@ class AdminAdminsController extends Controller
                 'account_name' => $request->fullname,
                 'account_email' => $email,
                 'account_status' => $status,
+        ]);
+    }
+    
+    public function delete($id)
+    {       
+        $delete = DB::table('admins')
+            ->where('id', $id)
+            ->delete();
+        
+        return redirect()
+            ->route('admin.admins.index')
+            ->with([
+                'success' => 'Admin berhasil dihapus.'
         ]);
     }
 }

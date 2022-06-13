@@ -4,6 +4,20 @@
             <div class="font-bold text-xl text-primary tracking-wider mb-6">List Fasilitas</div>
         </div>
 
+        @if (session('success'))
+            <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                role="alert">
+                <span class="font-medium">Success!</span> {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('warning'))
+            <div class="p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg dark:bg-yellow-200 dark:text-yellow-800"
+                role="alert">
+                <span class="font-medium">Failed!</span> {{ session('warning') }}
+            </div>
+        @endif
+
         <x-card>
 
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

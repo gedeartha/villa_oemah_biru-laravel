@@ -9,6 +9,10 @@ class AdminUsersController extends Controller
 {
     public function index()
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $users = DB::Table('users')
             ->get();
 

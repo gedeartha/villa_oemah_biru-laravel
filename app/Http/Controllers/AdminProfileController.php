@@ -9,6 +9,10 @@ class AdminProfileController extends Controller
 {
     public function index()
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $id = session()->get('id_admin');
         
         $admin = DB::Table('admins')

@@ -12,6 +12,10 @@ class AdminRoomController extends Controller
 {
     public function index()
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $rooms = DB::Table('rooms')
             ->get();
 
@@ -19,7 +23,11 @@ class AdminRoomController extends Controller
     }
 
     public function add()
-    {        
+    {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         return view('admin.villa.rooms.add');
     }
 
@@ -71,6 +79,10 @@ class AdminRoomController extends Controller
 
     public function edit($id)
     {
+        if (session()->get('login') == null) {
+            return view('admin.login.index');
+        }
+        
         $villa = DB::table('villas')
             ->where('id', 1)
             ->first();
