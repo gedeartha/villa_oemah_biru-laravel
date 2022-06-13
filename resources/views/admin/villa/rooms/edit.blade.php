@@ -89,6 +89,14 @@
                             </div>
 
                             <div class="col-span-4 my-auto">
+                                <div class="font-semibold text-sm text-primary">Deskripsi</div>
+                            </div>
+                            <div class="col-span-8">
+                                <textarea id="description" name="description" rows="5"
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ $room->description }}</textarea>
+                            </div>
+
+                            <div class="col-span-4 my-auto">
                                 <div class="font-semibold text-sm text-primary">Foto 1</div>
                             </div>
                             <div class="col-span-8">
@@ -204,7 +212,7 @@
                         </div>
 
                         <div class="mt-4">
-                            {{-- <div class="text-sm text-primary font-medium">{{ $room->facilities }}</div> --}}
+                            <div class="text-sm text-primary font-medium">{{ $room->description }}</div>
                         </div>
 
                     </div>

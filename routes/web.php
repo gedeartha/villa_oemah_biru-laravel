@@ -36,6 +36,11 @@ Route::post('register/store', [UserAuthControlller::class, 'store'])->name('regi
 Route::post('register/auth', [UserAuthControlller::class, 'auth'])->name('auth');
 Route::get('logout', [UserAuthControlller::class, 'logout'])->name('logout');
 
+Route::get('forgot-password', [UserAuthControlller::class, 'forgotPassword'])->name('forgot-password');
+Route::post('forgot-password/store', [UserAuthControlller::class, 'resetPassword'])->name('reset-password.store');
+Route::get('reset-password/{token}', [UserAuthControlller::class, 'changePasswordIndex'])->name('reset-password');
+Route::post('reset-password/store', [UserAuthControlller::class, 'changePassword'])->name('change-password');
+
 Route::get('rooms/{id}', [UserRoomController::class, 'index'])->name('rooms');
 Route::post('rooms/{id}/checkout', [UserRoomController::class, 'checkout'])->name('rooms.checkout');
 
@@ -49,7 +54,9 @@ Route::put('/profile/password/update', [UserProfileController::class, 'passwordC
 
 Route::get('orders', [UserOrdersController::class, 'index'])->name('orders');
 Route::get('invoice/{id}', [UserOrdersController::class, 'invoice'])->name('invoice');
+Route::post('invoice/{id}', [UserOrdersController::class, 'payment'])->name('invoice.payment');
 Route::put('invoice/{id}/update', [UserOrdersController::class, 'update'])->name('update');
+Route::get('invoice/{id}/cancel', [UserOrdersController::class, 'cancel'])->name('cancel');
 
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login.index');
 Route::post('/admin/login/auth', [AdminLoginController::class, 'auth'])->name('admin.login.auth');

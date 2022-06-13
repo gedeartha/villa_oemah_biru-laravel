@@ -92,6 +92,10 @@
                                 <div class="font-extrabold tracking-wider text-2xl text-primary my-4">
                                     Rp {{ number_format($room->price, 0, ',', '.') }}/malam</div>
 
+
+                                <div class="font-medium text-base text-primary/60 mt-4 mb-2">{{ $room->description }}
+                                </div>
+
                                 <div class="font-bold text-lg text-primary mt-4 mb-2">Fasilitas</div>
 
                                 <div class="grid grid-cols-5 gap-x-10 gap-y-4">
@@ -125,86 +129,84 @@
                     </x-card>
                 </div>
 
-                @if (session()->get('login') != null)
-                    <div class="col-span-4">
-                        <x-card>
-                            <form action="/rooms/{{ $room->id }}/checkout" method="POST">
-                                @csrf
+                {{-- @if (session()->get('login') != null) --}}
+                <div class="col-span-4">
+                    <x-card>
+                        <form action="/rooms/{{ $room->id }}/checkout" method="POST">
+                            @csrf
 
-                                <div class="p-4">
-                                    <div class="font-bold text-lg text-primary">Booking Kamar Ini</div>
+                            <div class="p-4">
+                                <div class="font-bold text-lg text-primary">Booking Kamar Ini</div>
 
-                                    <hr class="my-2 mb-4" />
+                                <hr class="my-2 mb-4" />
 
-                                    {{-- Warning Alert --}}
-                                    @if (session('warning'))
-                                        <div class="flex p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg"
-                                            role="alert">
-                                            <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor"
+                                {{-- Warning Alert --}}
+                                @if (session('warning'))
+                                    <div class="flex p-4 mb-4 text-sm text-yellow-700 bg-yellow-100 rounded-lg"
+                                        role="alert">
+                                        <svg class="inline flex-shrink-0 mr-3 w-5 h-5" fill="currentColor"
+                                            viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                            <path fill-rule="evenodd"
+                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        <div>
+                                            <span class="font-medium">Warning!</span> {{ session('warning') }}
+                                        </div>
+                                    </div>
+                                @endif
+                                {{-- Warning Alert --}}
+
+                                <div class="mb-3">
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Tanggal
+                                        Check
+                                        In</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
                                                 viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd"
-                                                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
                                                     clip-rule="evenodd"></path>
                                             </svg>
-                                            <div>
-                                                <span class="font-medium">Warning!</span> {{ session('warning') }}
-                                            </div>
                                         </div>
-                                    @endif
-                                    {{-- Warning Alert --}}
-
-                                    <div class="mb-3">
-                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Tanggal
-                                            Check
-                                            In</label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                    fill="currentColor" viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd"
-                                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                            </div>
-                                            <input datepicker type="text" name="check_in"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                                                placeholder="Pilih Tanggal" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Tanggal
-                                            Check
-                                            Out</label>
-                                        <div class="relative">
-                                            <div
-                                                class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400"
-                                                    fill="currentColor" viewBox="0 0 20 20"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd"
-                                                        d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                            </div>
-                                            <input datepicker type="text" name="check_out"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
-                                                placeholder="Pilih Tanggal" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="mt-4">
-                                        <button type="submit"
-                                            class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cek
-                                            Ketersediaan</button>
+                                        <input datepicker type="text" name="check_in"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                                            placeholder="Pilih Tanggal" required>
                                     </div>
                                 </div>
-                            </form>
-                        </x-card>
-                    </div>
-                @endif
+
+                                <div class="mb-3">
+                                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Tanggal
+                                        Check
+                                        Out</label>
+                                    <div class="relative">
+                                        <div
+                                            class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                            <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor"
+                                                viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd"
+                                                    d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
+                                                    clip-rule="evenodd"></path>
+                                            </svg>
+                                        </div>
+                                        <input datepicker type="text" name="check_out"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5"
+                                            placeholder="Pilih Tanggal" required>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit"
+                                        class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Cek
+                                        Ketersediaan</button>
+                                </div>
+                            </div>
+                        </form>
+                    </x-card>
+                </div>
+                {{-- @endif --}}
             </div>
         </div>
     </div>

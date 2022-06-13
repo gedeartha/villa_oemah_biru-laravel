@@ -22,51 +22,60 @@
                     <img class="w-full h-64 object-cover rounded-t-2xl"
                         src="{{ Storage::url('rooms/') . $room->image1 }}" alt="Room Silver" />
 
-                    <div class="p-4">
-                        <div class="grid grid-cols-12 gap-2">
-                            <div class="col-span-12">
-                                <div class="float-left">
-                                    <div class="font-extrabold text-xl tracking-wider text-primary">{{ $room->name }}
-                                        Room</div>
-                                </div>
+                    <div class="p-4 h-72">
 
-                                <div class="float-right -mt-14">
-                                    <span
-                                        class="box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-medium text-lg px-2 py-1">
-                                        Rp {{ number_format($room->price, 0, ',', '.') }}/malam
-                                    </span>
+                        <div class="flex flex-col h-full justify-between">
+                            <div>
+                                <div class="grid grid-cols-12 gap-2">
+
+                                    <div class="col-span-12">
+                                        <div class="float-left">
+                                            <div class="font-extrabold text-xl tracking-wider text-primary">
+                                                {{ $room->name }}
+                                                Room</div>
+                                        </div>
+
+                                        <div class="float-right -mt-14">
+                                            <span
+                                                class="box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-medium text-lg px-2 py-1">
+                                                Rp {{ number_format($room->price, 0, ',', '.') }}/malam
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-span-12">
+                                        <div class="text-gray-600 font-medium tracking-wider mb-2">Fasilitas</div>
+                                        <div class="grid grid-cols-2 gap-0">
+                                            @php
+                                                $roomFacilities = DB::Table('room_facilities')
+                                                    ->where('room_id', $room->id)
+                                                    ->get();
+                                            @endphp
+
+                                            @foreach ($roomFacilities as $roomFacility)
+                                                @php
+                                                    $facilities = DB::Table('facilities')
+                                                        ->where('id', $roomFacility->facilities_id)
+                                                        ->first();
+                                                @endphp
+
+                                                <div class="text-gray-500">&bull; {{ $facilities->name }}</div>
+                                            @endforeach
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="col-span-12">
-                                <div class="text-gray-600 font-medium tracking-wider mb-2">Fasilitas</div>
-                                <div class="grid grid-cols-2 gap-0">
-                                    @php
-                                        $roomFacilities = DB::Table('room_facilities')
-                                            ->where('room_id', $room->id)
-                                            ->get();
-                                    @endphp
-
-                                    @foreach ($roomFacilities as $roomFacility)
-                                        @php
-                                            $facilities = DB::Table('facilities')
-                                                ->where('id', $roomFacility->facilities_id)
-                                                ->first();
-                                        @endphp
-
-                                        <div class="text-gray-500">&bull; {{ $facilities->name }}</div>
-                                    @endforeach
-                                </div>
-                            </div>
-
-
-                            <div class="col-span-12">
-                                <hr />
-                                <div class="mb-3 mt-5 text-center">
-                                    <a href="{{ route('rooms', $room->id) }}"
-                                        class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                                        Detail Room
-                                    </a>
+                            <div>
+                                <div class="grid grid-cols-12 gap-2">
+                                    <div class="col-span-12">
+                                        <hr />
+                                        <div class="mb-3 mt-5 text-center">
+                                            <a href="{{ route('rooms', $room->id) }}"
+                                                class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                Detail Room
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

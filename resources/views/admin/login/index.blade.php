@@ -8,13 +8,15 @@
                 <div class="flex items-center justify-center h-full">
                     <x-card>
                         <div class="w-96 p-6">
-                            <div class="flex justify-center items-center space-x-4">
-                                <img src="/image/logo.svg" class="w-20 h-20" />
-                                <div>
-                                    <span class="font-semibold text-lg text-primary">Villa Oemah Biru Bali</span>
-                                    <p class="text-sm text-gray-500 italic">Admin Login</p>
+                            <a href="/">
+                                <div class="flex justify-center items-center space-x-4">
+                                    <img src="/image/logo.svg" class="w-20 h-20" />
+                                    <div>
+                                        <span class="font-semibold text-lg text-primary">Villa Oemah Biru Bali</span>
+                                        <p class="text-sm text-gray-500 italic">Admin Login</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
 
                             {{-- Warning Alert --}}
                             @if (session('warning'))

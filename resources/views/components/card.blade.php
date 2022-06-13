@@ -1,3 +1,3 @@
-<div class="bg-white shadow-md rounded-2xl h-fit">
+<div class="bg-white shadow-md rounded-2xl">
     {{ $slot }}
 </div>

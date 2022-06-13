@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
+            $table->integer('midtrans_order_id')->nullable();
             $table->string('room_id');
             $table->date('check_in');
             $table->date('check_out');

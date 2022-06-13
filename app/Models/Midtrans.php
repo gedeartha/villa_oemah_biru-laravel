@@ -5,16 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Room extends Model
+class Midtrans extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'price',
-        'description',
-        'status',
-        'image1',
-        'image2',
+        'order_id',
+        'transaction_status',
+        'created_at',
+        'updated_at',
     ];
 }

@@ -57,7 +57,7 @@ class UserRoomController extends Controller
         
         if ($dateCheckIn <= $dateNow) {
             return back()
-                 ->with([
+                ->with([
                     'warning' => 'Tanggal tidak tersedia'
                 ]);
         }
@@ -66,77 +66,86 @@ class UserRoomController extends Controller
         
         if ($checkIn == $checkOut) {
             return back()
-                 ->with([
+                ->with([
                     'warning' => 'Tanggal tidak tersedia'
                 ]);
         }
 
-        $diff = date_diff($checkIn, $checkOut);
-
-        $days = $diff->format('%a');
-
-        for ($i=0; $i < $days; $i++) {
-            $day = date('Y-m-d',strtotime($getCheckIn . "+$i days"));
-            
-            $reservation_date[] = DB::Table('reservation_dates')
-                ->where('room_id', $id)
-                ->where('reservation_date', $day)
-                ->count();
-            
-            if ($reservation_date[$i] != 0) {
-                return back()
-                    ->with([
-                            'warning' => 'Tanggal ' . $day . ' Tidak Tersedia'
-                    ]);
-            }
-        }
-
-        if ($days == count($reservation_date)) {
-
-            $invoice = rand(100, 9999);
-            
-            $room = DB::table('rooms')
-                ->where('id', $id)
-                ->first();
-
-            $total = $days * $room->price;
-            
-            $post = Reservation::insert([
-                'id' => $invoice,
-                'room_id' => $id,
-                'check_in' => date('Y-m-d',strtotime($getCheckIn)),
-                'check_out' => date('Y-m-d',strtotime($getCheckOut)),
-                'user_id' => $user_id,
-                'adult' => '0',
-                'child' => '0',
-                'total' => $total,
-                'status' => 'Pending',
-                'proof' => '-',
-                'created_at' => now(),
-                'updated_at' => now(),
+        if (!$user_id) {
+            return redirect()
+                ->route('login')
+                ->with([
+                        'success' => 'Tanggal tersedia, silahkan login untuk melanjutkan',
             ]);
+        } else {
+            $diff = date_diff($checkIn, $checkOut);
+
+            $days = $diff->format('%a');
 
             for ($i=0; $i < $days; $i++) {
                 $day = date('Y-m-d',strtotime($getCheckIn . "+$i days"));
+                
+                $reservation_date[] = DB::Table('reservation_dates')
+                    ->where('room_id', $id)
+                    ->where('reservation_date', $day)
+                    ->count();
+                
+                if ($reservation_date[$i] != 0) {
+                    return back()
+                        ->with([
+                                'warning' => 'Tanggal ' . $day . ' Tidak Tersedia'
+                        ]);
+                }
+            }
 
-                ReservationDate::insert([
-                    'reservation_id' => $invoice,
+            if ($days == count($reservation_date)) {
+
+                $invoice = rand(100, 9999);
+                
+                $room = DB::table('rooms')
+                    ->where('id', $id)
+                    ->first();
+
+                $total = $days * $room->price;
+                
+                $post = Reservation::insert([
+                    'id' => $invoice,
                     'room_id' => $id,
-                    'reservation_date' => $day,
+                    'check_in' => date('Y-m-d',strtotime($getCheckIn)),
+                    'check_out' => date('Y-m-d',strtotime($getCheckOut)),
+                    'user_id' => $user_id,
+                    'adult' => '0',
+                    'child' => '0',
+                    'total' => $total,
+                    'status' => 'Pending',
+                    'proof' => '-',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                for ($i=0; $i < $days; $i++) {
+                    $day = date('Y-m-d',strtotime($getCheckIn . "+$i days"));
+
+                    ReservationDate::insert([
+                        'reservation_id' => $invoice,
+                        'room_id' => $id,
+                        'reservation_date' => $day,
+                    ]);
+                }
+                
+                session([
+                    'invoice' => $invoice,
+                ]);
+
+                return redirect()
+                ->route('checkout');
+                
+            } else {
+                return back()
+                    ->with([
+                        'warning' => "Something went wrong!"
                 ]);
             }
-            
-            session([
-                'invoice' => $invoice,
-            ]);
-
-            return redirect()
-            ->route('checkout');
-        } else {
-            return back()
-                ->with([
-                    'warning' => "Something went wrong!"
-            ]);
         }
     }
 }

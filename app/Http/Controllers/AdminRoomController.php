@@ -54,6 +54,7 @@ class AdminRoomController extends Controller
             'id' => $id,
             'name' => $request->name,
             'price' => $request->price,
+            'description' => $request->description,
             'image1' => $request->image1->hashName(),
             'image2' => $request->image2->hashName(),
             'status' => $status,
@@ -125,6 +126,7 @@ class AdminRoomController extends Controller
         $update = DB::table('rooms')->where('id', $id)->update([
             'name' => $request->name,
             'price' => $request->price,
+            'description' => $request->description,
             'image1' => $image1,
             'image2' => $image2,
             'status' => $status,

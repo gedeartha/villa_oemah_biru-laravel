@@ -11,6 +11,7 @@ class Reservation extends Model
     
     protected $fillable = [
         'invoice',
+        'midtrans_order_id',
         'room_id',
         'check_in',
         'check_out',
