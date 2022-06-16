@@ -96,4 +96,6 @@ Route::get('/admin/villa/rooms/edit/{id}', [AdminRoomController::class, 'edit'])
 Route::put('/admin/villa/rooms/edit/{id}/update', [AdminRoomController::class, 'update'])->name('admin.villa.rooms.update');
 
 Route::get('/admin/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations.index');
+Route::get('/admin/reservations/export', [AdminReservationController::class, 'export'])->name('admin.reservations.export');
+Route::get('/admin/reservations/download', [AdminReservationController::class, 'download'])->name('admin.reservations.download');
 Route::get('/admin/reservations/detail/{id}', [AdminReservationController::class, 'detail'])->name('admin.reservations.detail');
