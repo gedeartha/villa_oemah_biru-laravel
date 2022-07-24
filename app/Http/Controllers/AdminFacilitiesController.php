@@ -17,7 +17,7 @@ class AdminFacilitiesController extends Controller
         $facilities = DB::Table('facilities')
             ->get();
 
-        return view('admin.facilities.index', ['facilities' => $facilities]);
+        return view('admin.facilities.index', ['facilities' => $facilities, 'name' => '']);
     }
     
     public function add()
@@ -116,5 +116,19 @@ class AdminFacilitiesController extends Controller
             ->with([
                 'success' => 'Fasilitas berhasil dihapus.'
         ]);
+    }
+    
+    public function search(Request $request)
+    {
+        if ($request->name) {
+            $facilities = DB::table('facilities')
+                ->where('name', 'like', '%'.$request->name.'%')
+                ->get();
+        } else {
+            $facilities = DB::Table('facilities')
+                ->get();
+        }
+
+        return view('admin.facilities.index', ['facilities' => $facilities, 'name' => $request->name]);
     }
 }

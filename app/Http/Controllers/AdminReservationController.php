@@ -19,7 +19,7 @@ class AdminReservationController extends Controller
             ->where('reservations.status', '!=', 'Pending')
             ->get();
 
-        return view('admin.reservations.index', ['reservations' => $reservations]);
+        return view('admin.reservations.index', ['reservations' => $reservations, 'id' => '']);
     }
 
     public function detail($id)
@@ -79,7 +79,6 @@ class AdminReservationController extends Controller
     
     public function download()
     {
-        
         if (session()->get('date_start') == '') {
             return back()
             ->with([
@@ -88,5 +87,20 @@ class AdminReservationController extends Controller
         } else {
             return Excel::download(new ReservationsExport, 'history-reservasi.xlsx');
         }
+    }
+    
+    public function search(Request $request)
+    {
+        if ($request->id) {
+            $reservations = DB::table('reservations')
+                ->where('id', $request->id)
+                ->get();
+        } else {
+            $reservations = DB::Table('reservations')
+                ->where('reservations.status', '!=', 'Pending')
+                ->get();
+        }
+
+        return view('admin.reservations.index', ['reservations' => $reservations, 'id' => $request->id]);
     }
 }

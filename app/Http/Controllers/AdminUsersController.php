@@ -16,7 +16,7 @@ class AdminUsersController extends Controller
         $users = DB::Table('users')
             ->get();
 
-        return view('admin.users.index', ['users' => $users]);
+        return view('admin.users.index', ['users' => $users, 'name' => '']);
     }
 
     public function edit($id)
@@ -47,5 +47,19 @@ class AdminUsersController extends Controller
         ->with([
                 'success' => 'Akun User berhasil diperbarui.'
         ]);
+    }
+    
+    public function search(Request $request)
+    {
+        if ($request->name) {
+            $users = DB::table('users')
+                ->where('name', 'like', '%'.$request->name.'%')
+                ->get();
+        } else {
+            $users = DB::Table('users')
+            ->get();
+        }
+        
+        return view('admin.users.index', ['users' => $users, 'name' => $request->name]);
     }
 }

@@ -19,7 +19,7 @@ class AdminRoomController extends Controller
         $rooms = DB::Table('rooms')
             ->get();
 
-        return view('admin.villa.rooms.index', ['rooms' => $rooms]);
+        return view('admin.villa.rooms.index', ['rooms' => $rooms, 'name' => '']);
     }
 
     public function add()
@@ -149,5 +149,19 @@ class AdminRoomController extends Controller
         ->with([
                 'success' => 'Kamar Villa berhasil diperbarui.'
         ]);
+    }
+    
+    public function search(Request $request)
+    {
+        if ($request->name) {
+            $rooms = DB::table('rooms')
+                ->where('name', 'like', '%'.$request->name.'%')
+                ->get();
+        } else {
+            $rooms = DB::Table('rooms')
+            ->get();
+        }
+
+        return view('admin.villa.rooms.index', ['rooms' => $rooms, 'name' => $request->name]);
     }
 }

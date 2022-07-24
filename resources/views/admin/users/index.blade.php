@@ -1,7 +1,27 @@
 <x-layouts.base>
     <div>
-        <div>
+        <div class="flex justify-between">
             <div class="font-bold text-xl text-primary tracking-wider mb-6">List Users</div>
+
+            <form method="POST" action="{{ route('admin.users.search') }}" enctype="multipart/form-data">
+                @csrf
+
+                <div class="flex space-x-2">
+                    <input type="text" id="text" name="name" value="{{ old('name', $name) }}"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="Cari Nama User">
+                    <button
+                        class="py-2.5 px-5 flex justify-center items-center text-sm font-bold text-white focus:outline-none shadow-lg  bg-primary/70 rounded-lg hover:bg-blue-800">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                            fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Cari
+                    </button>
+                </div>
+            </form>
         </div>
 
         <x-card>
@@ -70,8 +90,8 @@
                                 <th colspan="6" scope="row"
                                     class="px-6 py-4 text-center font-medium text-gray-500 dark:text-white whitespace-nowrap border-r">
                                     <div class="flex items-center justify-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
-                                            viewBox="0 0 20 20" fill="currentColor">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                            fill="currentColor">
                                             <path fill-rule="evenodd"
                                                 d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
                                                 clip-rule="evenodd" />

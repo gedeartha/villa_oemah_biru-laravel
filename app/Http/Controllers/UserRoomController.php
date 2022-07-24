@@ -53,16 +53,19 @@ class UserRoomController extends Controller
         $dateNow = date('Y-m-d');
         
         $checkIn = date_create($getCheckIn);
+        $checkOut = date_create($getCheckOut);
         $dateCheckIn = date_format($checkIn, 'Y-m-d');
+        $dateCheckOut = date_format($checkOut, 'Y-m-d');
+
+        // dd($dateCheckIn, $dateCheckOut, $dateNow);
         
-        if ($dateCheckIn <= $dateNow) {
+        if ($dateCheckIn >= $dateCheckOut) {
             return back()
                 ->with([
-                    'warning' => 'Tanggal tidak tersedia'
+                    'warning' => 'Mohon pilih tanggal checkout lebih besar dari tanggal checkin'
                 ]);
         }
         
-        $checkOut = date_create($getCheckOut);
         
         if ($checkIn == $checkOut) {
             return back()

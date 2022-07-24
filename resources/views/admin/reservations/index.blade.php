@@ -2,10 +2,33 @@
     <div>
         <div class="flex justify-between items-center mb-6">
             <div class="font-bold text-xl text-primary tracking-wider">Riwayat Reservasi</div>
-            <a href="{{ route('admin.reservations.export') }}">
-                <button
-                    class="text-white bg-primary/70 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-1 text-center">Export</button>
-            </a>
+
+            <div class="space-x-4 flex justify-between">
+                <form method="POST" action="{{ route('admin.reservations.search') }}" enctype="multipart/form-data">
+                    @csrf
+
+                    <div class="flex space-x-2">
+                        <input type="number" id="text" name="id" value="{{ old('id', $id) }}"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                            placeholder="Cari ID Reservasi">
+                        <button
+                            class="py-2.5 px-5 flex justify-center items-center text-sm font-bold text-white focus:outline-none shadow-lg  bg-primary/70 rounded-lg hover:bg-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            Cari
+                        </button>
+                    </div>
+                </form>
+
+                <a href="{{ route('admin.reservations.export') }}">
+                    <button
+                        class="py-2.5 px-5 text-white bg-primary/70 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto text-center">Export</button>
+                </a>
+            </div>
         </div>
 
         <x-card>

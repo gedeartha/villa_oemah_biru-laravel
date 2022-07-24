@@ -938,9 +938,6 @@ input:checked + .toggle-bg {
 .float-left {
   float: left;
 }
-.m-5 {
-  margin: 1.25rem;
-}
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -960,10 +957,6 @@ input:checked + .toggle-bg {
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-}
-.mx-5 {
-  margin-left: 1.25rem;
-  margin-right: 1.25rem;
 }
 .-mt-4 {
   margin-top: -1rem;
@@ -1058,14 +1051,14 @@ input:checked + .toggle-bg {
 .mr-2 {
   margin-right: 0.5rem;
 }
+.-mb-2 {
+  margin-bottom: -0.5rem;
+}
 .ml-64 {
   margin-left: 16rem;
 }
 .mr-1 {
   margin-right: 0.25rem;
-}
-.-mb-2 {
-  margin-bottom: -0.5rem;
 }
 .block {
   display: block;
@@ -1449,6 +1442,9 @@ input:checked + .toggle-bg {
 .border-4 {
   border-width: 4px;
 }
+.border-2 {
+  border-width: 2px;
+}
 .border-b-2 {
   border-bottom-width: 2px;
 }
@@ -1704,17 +1700,14 @@ input:checked + .toggle-bg {
 .pl-11 {
   padding-left: 2.75rem;
 }
+.pt-4 {
+  padding-top: 1rem;
+}
 .pr-4 {
   padding-right: 1rem;
 }
 .pt-2 {
   padding-top: 0.5rem;
-}
-.pb-6 {
-  padding-bottom: 1.5rem;
-}
-.pt-4 {
-  padding-top: 1rem;
 }
 .text-left {
   text-align: left;
@@ -1990,6 +1983,14 @@ input:checked + .toggle-bg {
   --tw-border-opacity: 1;
   border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
+.hover\:border-tertiary:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(236 235 255 / var(--tw-border-opacity));
+}
+.hover\:border-primary:hover {
+  --tw-border-opacity: 1;
+  border-color: rgb(19 15 121 / var(--tw-border-opacity));
+}
 .hover\:bg-blue-800:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(30 66 159 / var(--tw-bg-opacity));
@@ -2014,6 +2015,15 @@ input:checked + .toggle-bg {
   --tw-bg-opacity: 1;
   background-color: rgb(243 244 246 / var(--tw-bg-opacity));
 }
+.hover\:bg-primary\/50:hover {
+  background-color: rgb(19 15 121 / 0.5);
+}
+.hover\:bg-primary\/20:hover {
+  background-color: rgb(19 15 121 / 0.2);
+}
+.hover\:bg-primary\/10:hover {
+  background-color: rgb(19 15 121 / 0.1);
+}
 .hover\:font-semibold:hover {
   font-weight: 600;
 }
@@ -2028,6 +2038,10 @@ input:checked + .toggle-bg {
 .hover\:text-gray-600:hover {
   --tw-text-opacity: 1;
   color: rgb(75 85 99 / var(--tw-text-opacity));
+}
+.hover\:text-blue-700:hover {
+  --tw-text-opacity: 1;
+  color: rgb(26 86 219 / var(--tw-text-opacity));
 }
 .hover\:underline:hover {
   -webkit-text-decoration-line: underline;
