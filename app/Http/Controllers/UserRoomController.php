@@ -65,7 +65,13 @@ class UserRoomController extends Controller
                     'warning' => 'Mohon pilih tanggal checkout lebih besar dari tanggal checkin'
                 ]);
         }
-        
+
+        if ($dateCheckIn <= $dateNow) {
+            return back()
+                ->with([
+                    'warning' => 'Mohon pilih tanggal checkin lebih dari hari ini'
+                ]);
+        }
         
         if ($checkIn == $checkOut) {
             return back()
