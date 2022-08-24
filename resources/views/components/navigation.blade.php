@@ -77,6 +77,43 @@
             </x-ul-link>
             </li>
 
+            <li>
+                <button type="button"
+                    class="flex items-center p-2 w-full text-base font-normal text-gray-900 rounded-lg transition duration-75 group hover:bg-tertiary hover:font-semibold hover:text-gray-900"
+                    aria-controls="dropdown-admin" data-collapse-toggle="dropdown-addons">
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                        class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900"
+                        fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+                    </svg>
+
+                    <span class="flex-1 ml-4 text-left whitespace-nowrap" sidebar-toggle-item>Fasilitas Extra</span>
+
+                    <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <x-ul-link id="dropdown-addons" :active="request()->getRequestUri() == '/admin/addons' or
+                    request()->getRequestUri() == '/admin/addons/add'">
+            <li>
+                <x-nav-link :href="route('admin.addons.index')" :active="request()->getRequestUri() == '/admin/addons'">
+                    <div class="pl-11 ">
+                        List Fasilitas Extra</div>
+                </x-nav-link>
+            </li>
+            <li>
+                <x-nav-link :href="route('admin.addons.add')" :active="request()->getRequestUri() == '/admin/addons/add'">
+                    <div class="pl-11 ">
+                        Tambah Fasilitas Extra</div>
+                </x-nav-link>
+            </li>
+            </x-ul-link>
+            </li>
+
             @if (session()->get('role') == 'owner')
                 <li>
                     <button type="button"
@@ -165,6 +202,19 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                     </svg>
                     <span class="ml-4">Riwayat Order</span>
+                </x-nav-link>
+            </li>
+
+            <li>
+                <x-nav-link :href="route('admin.reviews.index')" :active="request()->getRequestUri() == '/admin/reviews'">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor"
+                        class="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+                    </svg>
+
+                    <span class="ml-4">Riwayat Ulasan</span>
                 </x-nav-link>
             </li>
 

@@ -17,7 +17,12 @@ class UserHomeCotroller extends Controller
         $rooms = DB::Table('rooms')
             ->where('status', 'Disewakan')
             ->get();
+        
+        $reviews = DB::Table('reviews')
+            ->orderBy('created_at', 'desc')
+            ->limit(4)
+            ->get();
 
-        return view('welcome', ['villa' => $villa, 'rooms' => $rooms]);
+        return view('welcome', ['villa' => $villa, 'rooms' => $rooms, 'reviews' => $reviews]);
     }
 }

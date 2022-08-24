@@ -32,9 +32,25 @@ class AdminReservationController extends Controller
             ->where('reservations.status', '!=', 'Pending')
             ->where('reservations.id', $id)
             ->first();
-
-        return view('admin.reservations.detail', ['reservation' => $reservation]);
         
+        $addons = DB::Table('reservation_add_ons')
+            ->where('reservation_id', $id)
+            ->get();
+
+        return view('admin.reservations.detail', ['reservation' => $reservation, 'addons' => $addons]);
+        
+    }
+
+    public function complete($id)
+    {        
+        $update = DB::table('reservations')
+            ->where('id', $id)
+            ->update([
+                'status' => 'Review',
+                'updated_at' =>now()
+            ]);
+        
+        return back();
     }
     
     public function export(Request $request)

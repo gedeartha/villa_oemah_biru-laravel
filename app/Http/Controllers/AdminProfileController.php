@@ -19,7 +19,7 @@ class AdminProfileController extends Controller
             ->where('id', $id)
             ->first();
 
-        return view('admin.profile', ['admin' => $admin]);
+        return view('admin.profile.index', ['admin' => $admin]);
     }
 
     public function update(Request $request)

@@ -66,6 +66,70 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-span-12 mb-3">
+                                        <table class="w-full text-sm text-left text-gray-500">
+                                            <thead class="text-xs text-white uppercase bg-primary/70">
+                                                <tr>
+                                                    <th scope="col" class="px-6 py-3 border-r text-center">
+                                                        Fasilitas Extra
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 border-r text-center">
+                                                        Harga
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 border-r text-center">
+                                                        Jumlah
+                                                    </th>
+                                                    <th scope="col" class="px-6 py-3 border-r text-center">
+                                                        Sub Total
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @php
+                                                    $totalAddOns = 0;
+                                                @endphp
+                                                @forelse ($addons as $addon)
+                                                    <tr class="border-b odd:bg-white even:bg-primary/5">
+                                                        <td class="px-6 py-4 border-r">
+                                                            {{ $addon->name }}
+                                                        </td>
+                                                        <td class="px-6 py-4 border-r text-right">Rp
+                                                            {{ number_format($addon->price, 0, ',', '.') }}
+                                                        </td>
+                                                        <td class="px-6 py-4 border-r text-right">
+                                                            {{ number_format($addon->quantity, 0, ',', '.') }}
+                                                        </td>
+                                                        <td class="px-6 py-4 border-r text-right">
+                                                            @php
+                                                                $subtotal = $addon->price * $addon->quantity;
+                                                                $totalAddOns = $totalAddOns + $subtotal;
+                                                            @endphp
+                                                            {{ number_format($subtotal, 0, ',', '.') }}
+                                                        </td>
+                                                    </tr>
+                                                @empty<tr class="border-b odd:bg-white even:bg-primary/5">
+                                                        <th colspan="8" scope="row"
+                                                            class="px-6 py-4 text-center font-medium text-gray-500 dark:text-white whitespace-nowrap border-r">
+                                                            <div class="flex items-center justify-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5"
+                                                                    viewBox="0 0 20 20" fill="currentColor">
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z"
+                                                                        clip-rule="evenodd" />
+                                                                    <path
+                                                                        d="M6 12a2 2 0 012-2h8a2 2 0 012 2v2a2 2 0 01-2 2H2h2a2 2 0 002-2v-2z" />
+                                                                </svg>
+                                                                <div class="ml-1">Tidak ada penambahan fasilitas extra
+                                                                </div>
+                                                            </div>
+                                                        </th>
+                                                    </tr>
+                                                @endforelse
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+
                                     <div class="col-span-12">
                                         <div class="mb-3">
                                             <label for="adult"
@@ -102,17 +166,31 @@
                                     <div class="col-span-12">
                                         <div class="mb-3">
                                             <div class="font-semibold text-sm text-gray-500">Total</div>
+                                            @php
+                                                $grandTotal = $totalAddOns + $reservation->total;
+                                            @endphp
                                             <div class="font-bold text-xl text-primary">Rp
-                                                {{ number_format($reservation->total, 0, ',', '.') }}
+                                                {{ number_format($grandTotal, 0, ',', '.') }}
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-span-12">
-                                        <div class="mb-3">
-                                            <button type="submit"
-                                                class="text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Booking
-                                                Sekarang</button>
+                                        <div class="grid grid-cols-2 gap-4">
+
+                                            <div class="mb-3">
+                                                <a href="{{ route('add-ons.index') }}">
+                                                    <div
+                                                        class="border border-blue-700 text-blue-700 hover:bg-blue-800 hover:text-white w-full bg-white font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                        Kembali</div>
+                                                </a>
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <button type="submit"
+                                                    class="border border-blue-700 text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Booking
+                                                    Sekarang</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

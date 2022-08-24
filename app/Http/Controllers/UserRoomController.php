@@ -147,7 +147,7 @@ class UserRoomController extends Controller
                 ]);
 
                 return redirect()
-                ->route('checkout');
+                ->route('add-ons.index');
                 
             } else {
                 return back()

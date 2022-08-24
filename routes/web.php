@@ -1,14 +1,17 @@
 <?php
 
+use App\Http\Controllers\AdminAddOnController;
 use App\Http\Controllers\AdminAdminsController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminFacilitiesController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\AdminReservationController;
+use App\Http\Controllers\AdminReviewController;
 use App\Http\Controllers\AdminRoomController;
 use App\Http\Controllers\AdminUsersController;
 use App\Http\Controllers\AdminVillaController;
+use App\Http\Controllers\UserAddOnController;
 use App\Http\Controllers\UserAuthControlller;
 use App\Http\Controllers\UserCheckoutController;
 use App\Http\Controllers\UserHomeCotroller;
@@ -44,6 +47,9 @@ Route::post('reset-password/store', [UserAuthControlller::class, 'changePassword
 Route::get('rooms/{id}', [UserRoomController::class, 'index'])->name('rooms');
 Route::post('rooms/{id}/checkout', [UserRoomController::class, 'checkout'])->name('rooms.checkout');
 
+Route::get('add-ons', [UserAddOnController::class, 'index'])->name('add-ons.index');
+Route::post('add-ons/post', [UserAddOnController::class, 'post'])->name('add-ons.post');
+
 Route::get('checkout', [UserCheckoutController::class, 'index'])->name('checkout');
 Route::put('checkout/update', [UserCheckoutController::class, 'update'])->name('checkout.update');
 
@@ -57,6 +63,7 @@ Route::get('invoice/{id}', [UserOrdersController::class, 'invoice'])->name('invo
 Route::post('invoice/{id}', [UserOrdersController::class, 'payment'])->name('invoice.payment');
 Route::put('invoice/{id}/update', [UserOrdersController::class, 'update'])->name('update');
 Route::get('invoice/{id}/cancel', [UserOrdersController::class, 'cancel'])->name('cancel');
+Route::post('invoice/{id}/rating', [UserOrdersController::class, 'rating'])->name('rating');
 
 Route::get('/admin/login', [AdminLoginController::class, 'index'])->name('admin.login.index');
 Route::post('/admin/login/auth', [AdminLoginController::class, 'auth'])->name('admin.login.auth');
@@ -98,8 +105,21 @@ Route::post('/admin/villa/rooms/store', [AdminRoomController::class, 'store'])->
 Route::get('/admin/villa/rooms/edit/{id}', [AdminRoomController::class, 'edit'])->name('admin.villa.rooms.edit');
 Route::put('/admin/villa/rooms/edit/{id}/update', [AdminRoomController::class, 'update'])->name('admin.villa.rooms.update');
 
+Route::get('/admin/addons', [AdminAddOnController::class, 'index'])->name('admin.addons.index');
+Route::post('/admin/addons/rooms', [AdminAddOnController::class, 'search'])->name('admin.addons.search');
+Route::get('/admin/addons/add', [AdminAddOnController::class, 'add'])->name('admin.addons.add');
+Route::post('/admin/addons/store', [AdminAddOnController::class, 'store'])->name('admin.addons.store');
+Route::get('/admin/addons/edit/{id}', [AdminAddOnController::class, 'edit'])->name('admin.addons.edit');
+Route::put('/admin/addons/edit/{id}/update', [AdminAddOnController::class, 'update'])->name('admin.addons.update');
+Route::delete('/admin/addons/edit/{id}/delete', [AdminAddOnController::class, 'delete'])->name('admin.addons.delete');
+
 Route::get('/admin/reservations', [AdminReservationController::class, 'index'])->name('admin.reservations.index');
 Route::post('/admin/reservations', [AdminReservationController::class, 'search'])->name('admin.reservations.search');
 Route::get('/admin/reservations/export', [AdminReservationController::class, 'export'])->name('admin.reservations.export');
 Route::get('/admin/reservations/download', [AdminReservationController::class, 'download'])->name('admin.reservations.download');
 Route::get('/admin/reservations/detail/{id}', [AdminReservationController::class, 'detail'])->name('admin.reservations.detail');
+Route::get('/admin/reservations/detail/{id}/complete', [AdminReservationController::class, 'complete'])->name('admin.reservations.complete');
+
+Route::get('/admin/reviews', [AdminReviewController::class, 'index'])->name('admin.reviews.index');
+Route::post('/admin/reviews', [AdminReviewController::class, 'search'])->name('admin.reviews.search');
+Route::get('/admin/reviews/{id}/delete', [AdminReviewController::class, 'delete'])->name('admin.reviews.delete');

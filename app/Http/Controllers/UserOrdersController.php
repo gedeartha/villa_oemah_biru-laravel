@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Midtrans;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -197,5 +198,23 @@ class UserOrdersController extends Controller
             ->with([
                     'success' => 'Pesanan berhasil di cancel'
         ]);
+    }
+
+    public function rating(Request $request, $id)
+    {        
+        $post = Review::create([
+            'reservation_id' => $id,
+            'rating' => $request->rating,
+            'review' => $request->review,
+        ]);     
+
+        $update = DB::table('reservations')
+            ->where('id', $id)
+            ->update([
+                'updated_at' =>now(),
+                'status' => 'Selesai',
+        ]);
+        
+        return back();
     }
 }

@@ -44,6 +44,12 @@
                                                 <span
                                                     class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Sudah
                                                     Dibayar</span>
+                                            @elseif ($reservation->status == 'Selesai')
+                                                <span
+                                                    class="bg-green-100 text-green-800 text-xs font-semibold px-2.5 py-0.5 rounded">Selesai</span>
+                                            @elseif ($reservation->status == 'Review')
+                                                <span
+                                                    class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">Review</span>
                                             @elseif ($reservation->status == 'Belum Dibayar')
                                                 <span
                                                     class="bg-yellow-100 text-yellow-800 text-xs font-semibold px-2.5 py-0.5 rounded">Belum
@@ -142,12 +148,16 @@
                                                 @endif
                                             </div>
 
-                                            <div class="mt-4">
-                                                <a href="{{ $reservation->id }}/cancel">
-                                                    <button
-                                                        class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancel</button>
-                                                </a>
-                                            </div>
+
+                                            @if ($reservation->status != 'Selesai' && $reservation->status != 'Review')
+                                                <div class="mt-4">
+                                                    <a href="{{ $reservation->id }}/cancel">
+                                                        <button
+                                                            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Cancel</button>
+                                                    </a>
+                                                </div>
+                                            @endif
+
                                         </div>
 
                                         <form action="" id="submit_form" method="POST">
@@ -155,8 +165,265 @@
                                             <input type="hidden" name="invoice" value="{{ $reservation->id }}">
                                             <input type="hidden" name="json" id="json_callback">
                                         </form>
-                                    </div>
 
+                                        @if ($reservation->status == 'Review')
+                                            <div>
+                                                <hr class="mb-3" />
+
+                                                <div>
+                                                    <div class="font-semibold text-sm text-primary mb-2">Beri Ulasan
+                                                    </div>
+                                                </div>
+
+                                                <form action="{{ $reservation->id }}/rating" method="POST">
+                                                    @csrf
+                                                    <div class="col-span-12">
+                                                        <div class="grid grid-cols-12 gap-2">
+                                                            <div class="col-span-4">
+                                                                <div>
+                                                                    <div class="flex items-center mb-1">
+                                                                        <input checked="" id="default-radio-1"
+                                                                            type="radio" value="5" name="rating"
+                                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                                                                        <label for="default-radio-1"
+                                                                            class="ml-2 text-sm font-medium text-gray-900 flex">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20" fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20" fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div class="flex items-center mb-1">
+                                                                        <input id="default-radio-2" type="radio"
+                                                                            value="4" name="rating"
+                                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                                                                        <label for="default-radio-2"
+                                                                            class="ml-2 text-sm font-medium text-gray-900 flex">
+
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div class="flex items-center mb-1">
+                                                                        <input id="default-radio-3" type="radio"
+                                                                            value="3" name="rating"
+                                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                                                                        <label for="default-radio-3"
+                                                                            class="ml-2 text-sm font-medium text-gray-900 flex">
+
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div class="flex items-center mb-1">
+                                                                        <input id="default-radio-4" type="radio"
+                                                                            value="2" name="rating"
+                                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                                                                        <label for="default-radio-4"
+                                                                            class="ml-2 text-sm font-medium text-gray-900 flex">
+
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                        </label>
+                                                                    </div>
+
+                                                                    <div class="flex items-center mb-1">
+                                                                        <input id="default-radio-5" type="radio"
+                                                                            value="1" name="rating"
+                                                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300">
+                                                                        <label for="default-radio-5"
+                                                                            class="ml-2 text-sm font-medium text-gray-900 flex">
+
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-yellow-300"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                class="h-5 w-5 text-gray-400"
+                                                                                viewBox="0 0 20 20"
+                                                                                fill="currentColor">
+                                                                                <path
+                                                                                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                                                                            </svg>
+                                                                        </label>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-span-8">
+                                                                <div>
+                                                                    <textarea id="review" rows="5" required name="review"
+                                                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+                                                                        placeholder="Masukkan ulasan"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-span-12 mt-4">
+                                                        <button type="submit"
+                                                            class="border border-blue-700 text-white w-full bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        @endif
+
+                                    </div>
                                 </x-card>
 
                             </div>

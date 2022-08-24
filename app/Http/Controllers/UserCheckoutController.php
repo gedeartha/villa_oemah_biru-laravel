@@ -31,6 +31,10 @@ class UserCheckoutController extends Controller
             ->where('id', 1)
             ->first();
         
+        $addons = DB::Table('reservation_add_ons')
+            ->where('reservation_id', $invoice)
+            ->get();
+        
         $getCheckIn = $reservation->check_in;
         $getCheckOut = $reservation->check_out;
             
@@ -40,7 +44,7 @@ class UserCheckoutController extends Controller
         
         $duration = $diff->format('%a');
 
-        return view('checkout', ['reservation' => $reservation, 'user' => $user, 'room' => $room, 'villa' => $villa, 'duration' => $duration]);
+        return view('checkout', ['reservation' => $reservation, 'user' => $user, 'room' => $room, 'villa' => $villa, 'duration' => $duration, 'addons' => $addons]);
     }
 
     public function update(Request $request)

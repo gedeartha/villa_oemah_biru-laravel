@@ -1,8 +1,7 @@
 <x-layouts.home>
     <x-user.navigation />
 
-    <div class="h-[85vh] max-w-screen bg-teal-300 bg-cover bg-center"
-        style="background-image: url(/image/bg-home-8.jpg)">
+    <div class="h-[85vh] max-w-screen bg-teal-300 bg-cover bg-center" style="background-image: url(/image/bg-home-8.jpg)">
         <div class="w-full h-full bg-black/50 flex items-center justify-center">
             <div class="text-center -mt-32">
                 <div class="font-extrabold text-6xl tracking-wider text-white mb-3">{{ $villa->name }}</div>
@@ -98,6 +97,47 @@
                     <img src="/image/logo.svg" class="h-80 -mt-5" alt="Logo">
                 </div>
             </div>
+        </div>
+    </div>
+
+
+    <div class="max-w-7xl mx-auto p-5 mb-20">
+        <div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 mb-5">
+            <h5 class="mb-2 text-3xl font-bold text-gray-900">What are they saying?</h5>
+            <p class="mb-3 text-base text-gray-500 sm:text-lg">Here are some testimonials from our
+                customers who have stayed at Villa Oemah Biru Bali</p>
+        </div>
+
+
+        <div class="grid mb-8 gap-4 rounded-lg md:mb-12 md:grid-cols-2">
+
+            @foreach ($reviews as $review)
+                <figure
+                    class="flex flex-col justify-center items-center p-8 text-center bg-white rounded-tl-2xl rounded-br-2xl border-b shadow-md">
+                    <blockquote class="mx-auto mb-4 max-w-2xl text-gray-500 lg:mb-8">
+                        <p class="my-4 font-light">"{{ $review->review }}"</p>
+                    </blockquote>
+                    @php
+                        $reservation = DB::Table('reservations')
+                            ->where('id', $review->reservation_id)
+                            ->first();
+                        
+                        $user = DB::Table('users')
+                            ->where('id', $reservation->user_id)
+                            ->first();
+                        
+                        $avatar = 'https://ui-avatars.com/api/?name=' . $user->name;
+                        
+                    @endphp
+                    <figcaption class="flex justify-center items-center space-x-3">
+                        <img class="w-9 h-9 rounded-full" src={{ Storage::url('avatar/') . $user->avatar }}
+                            alt="profile picture">
+                        <div class="space-y-0.5 font-medium text-left">
+                            <div>{{ $user->name }}</div>
+                        </div>
+                    </figcaption>
+                </figure>
+            @endforeach
         </div>
     </div>
 
