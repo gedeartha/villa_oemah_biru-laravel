@@ -55,6 +55,7 @@ class UserCheckoutController extends Controller
             'adult' => $request->adult,
             'child' => $request->child,
             'status' => 'Belum Dibayar',
+            'total' => $request->grandtotal,
             'updated_at' =>now()
         ]);
 

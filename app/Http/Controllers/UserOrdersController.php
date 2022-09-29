@@ -42,6 +42,10 @@ class UserOrdersController extends Controller
         $villa = DB::Table('villas')
             ->where('id', 1)
             ->first();
+            
+        $addons = DB::Table('reservation_add_ons')
+            ->where('reservation_id', $id)
+            ->get();
         
         $getCheckIn = $reservation->check_in;
         $getCheckOut = $reservation->check_out;
@@ -129,7 +133,8 @@ class UserOrdersController extends Controller
             'room' => $room, 
             'villa' => $villa, 
             'duration' => $duration,
-            'snap_token' => $snapToken
+            'snap_token' => $snapToken,
+            'addons' => $addons
         ]);
     }
     

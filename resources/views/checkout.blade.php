@@ -172,6 +172,9 @@
                                             <div class="font-bold text-xl text-primary">Rp
                                                 {{ number_format($grandTotal, 0, ',', '.') }}
                                             </div>
+
+                                            <input type="number" name="grandtotal" value="{{ $grandTotal }}"
+                                                class="hidden" />
                                         </div>
                                     </div>
 
